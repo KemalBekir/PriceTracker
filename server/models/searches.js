@@ -14,7 +14,7 @@ const searchesSchema = new Schema(
       type: String,
       required: [true, "Provide name for this item"],
     },
-    price: [{ type: ObjectId, ref: "History" }],
+    prices: [{ type: ObjectId, ref: "PriceHistory" }],
     owner: { type: ObjectId, ref: "User" },
   },
   { timestamps: true }
