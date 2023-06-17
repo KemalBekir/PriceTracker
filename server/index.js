@@ -2,9 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
+const cors = require("./middleware/cors");
+const auth = require("./middleware/auth");
+const catalogController = require("./controllers/catalog");
 dotenv.config();
 const PORT = process.env.PORT || 5000;
-
 
 start();
 console.log();
@@ -31,6 +33,9 @@ async function start() {
 
   const app = express();
   app.use(express.json());
+  app.use(cors());
+  app.use(auth());
+  app.use("/catalog", catalogController);
 
   app.get("/", (req, res) => {
     res.json({ message: "REST service operational" });
