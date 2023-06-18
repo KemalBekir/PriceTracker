@@ -26,6 +26,11 @@ async function getById(id) {
   });
 }
 
+async function deleteById(id) {
+  await Searches.findByIdAndDelete(id);
+}
+
+
 async function scrape(url, domain) {
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
@@ -68,4 +73,5 @@ module.exports = {
   getAll,
   getAllByOwner,
   getLatest,
+  deleteById,
 };
