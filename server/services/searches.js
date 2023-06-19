@@ -5,7 +5,8 @@ const mapErrors = require("../utils/mappers");
 
 const targetWebsites = {
   "amazon.co.uk": scrapeAmazon,
-}; //TODO - add more websites
+  // TODO - Add more websites and their corresponding scraping functions
+};
 
 async function getAll() {
   return Searches.find({});
@@ -30,21 +31,25 @@ async function deleteById(id) {
   await Searches.findByIdAndDelete(id);
 }
 
-
 async function scrape(url, domain) {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
 
   await page.goto(url);
 
   const scrapingFunction = targetWebsites[domain];
+  const result = await scrapingFunction(page, url); // Pass the 'page' and 'url' to the scraping function
   await browser.close();
-  return scrapingFunction;
+
+  return result;
 }
 
-async function scrapeAmazon(url) {
-  let productName = document.getElementById("productTitle").textContent;
-  let price = document.querySelector(".a-offscreen").textContent.substring(1);
+async function scrapeAmazon(page, url) {
+  const productName = await page.$eval("#productTitle", (element) => element.textContent.trim());
+  const priceElement = await page.$(".a-offscreen");
+  const price = await (await priceElement.getProperty("textContent")).jsonValue();
+  const formattedPrice = parseFloat(price.replace(/,/g, '').substring(1));
+
 
   let result = await Searches.findOne({ url });
 
@@ -56,7 +61,7 @@ async function scrapeAmazon(url) {
   }
 
   const newPrice = new Price({
-    price,
+    price: formattedPrice,
   });
 
   const savedPrice = await newPrice.save();

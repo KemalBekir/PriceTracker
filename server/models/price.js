@@ -1,7 +1,7 @@
 const {
   model,
   Schema,
-  Type: { ObjectId },
+  Types: { ObjectId },
 } = require("mongoose");
 
 const priceSchema = new Schema(
@@ -10,7 +10,7 @@ const priceSchema = new Schema(
       type: Number,
       min: [0, "Price cannot be a negative number"],
     },
-    search: { type: ObjectId, ref: "Searches", required: true },    
+    search: { type: ObjectId, ref: "Searches" },    
   },
   { timestamps: true }
 );
