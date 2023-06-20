@@ -14,12 +14,15 @@ const searchesSchema = new Schema(
       type: String,
       required: [true, "Provide name for this item"],
     },
+    img: {
+      type: String,
+    },
     prices: [{ type: ObjectId, ref: "PriceHistory" }],
     owner: { type: ObjectId, ref: "User" },
   },
   { timestamps: true }
 );
 
-const Searches = model('Searches', searchesSchema);
+const Searches = model("Searches", searchesSchema);
 
 module.exports = Searches;
