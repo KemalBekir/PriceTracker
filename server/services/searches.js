@@ -45,18 +45,35 @@ async function scrape(url, domain) {
 }
 
 async function scrapeAmazon(page, url) {
-  const productName = await page.$eval("#productTitle", (element) => element.textContent.trim());
+  const productName = await page.$eval("#productTitle", (element) =>
+    element.textContent.trim()
+  );
   const priceElement = await page.$(".a-offscreen");
-  const price = await (await priceElement.getProperty("textContent")).jsonValue();
-  const formattedPrice = parseFloat(price.replace(/,/g, '').substring(1));
+  const price = await (
+    await priceElement.getProperty("textContent")
+  ).jsonValue();
+  const formattedPrice = parseFloat(price.replace(/,/g, "").substring(1));
+  const imgElement = await page.$(".a-dynamic-image");
+  const img = await (await imgElement.getProperty("src")).jsonValue();
 
+  const result = await createOrUpdateSearches(
+    url,
+    productName,
+    formattedPrice,
+    img
+  );
 
+  return result;
+}
+
+async function createOrUpdateSearches(url, productName, formattedPrice, img) {
   let result = await Searches.findOne({ url });
 
   if (!result) {
     result = new Searches({
       url,
       itemName: productName,
+      img,
     });
   }
 
