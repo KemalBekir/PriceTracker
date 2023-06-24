@@ -5,7 +5,7 @@ type Props = {};
 const Home = (props: Props) => {
   return (
     <div className="relative grid grid-cols-2 gap-4 md:grid-cols-4">
-      <div className="absolute left-[640px] top-1/3 m-auto text-3xl font-bold rounded-full py-3 px-5 bg-white drop-shadow-lg z-10">
+      <div className="absolute left-[620px] top-1/3 m-auto text-3xl font-bold rounded-full py-3 px-5 bg-white drop-shadow-lg z-10 cursor-pointer">
         Start Saving Now!
       </div>
       <div className="grid gap-4">
