@@ -11,7 +11,7 @@ const Navbar = (props: Props) => {
   const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
 
   return (
-    <nav className="sticky top-0 z-10 border-b border-gray-200 bg-white bg-opacity-30 backdrop-blur-lg backdrop-filter">
+    <nav className="sticky top-0 z-20 border-b border-gray-200 bg-white bg-opacity-30 backdrop-blur-lg backdrop-filter h-[90px]">
       <div className="fixed top-0 z-30 flex w-full items-center justify-between py-5">
         <div className="mx-auto flex w-5/6 items-center justify-between">
           <div className="flex w-full items-center justify-between gap-16">
@@ -62,7 +62,7 @@ const Navbar = (props: Props) => {
 
       {/* MOBILE MENU MODAL */}
       {!isAboveMediumScreens && isMenuToggled && (
-        <div className="fixed right-0 bototm-0 z-40 min-h-screen w-[300px] drop-shadow-2xl bg-emerald-400 ">
+        <div className="fixed right-0 bototm-0 z-40 min-h-screen w-[300px] drop-shadow-xl bg-emerald-400 ">
           <div className="flex justify-end p-12">
             <button  onClick={() => setIsMenuToggled(!isMenuToggled)}>
               <XMarkIcon className="h-8 w-8 text-white" />
