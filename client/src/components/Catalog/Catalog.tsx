@@ -1,12 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import Search from "../Search/Search";
+import { useSearchParams } from "react-router-dom";
 
 type Props = {};
 
 const Catalog = (props: Props) => {
+  const [data, setData] = useState<any[]>([]);
+  const [isSearching, setSearching] = useState<boolean>(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [domain, setDomain] = useState<string>("");
   return (
     <>
-      <Search/>
+      <Search
+        data={data}
+        setData={setData}
+        isSearching={isSearching}
+        setSearching={setSearching}
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        domain={domain}
+        setDomain={setDomain}
+      />
       <div className="mt-2 grid grid-cols-2 gap-4 md:grid-cols-3">
         <div>
           <img

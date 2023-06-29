@@ -1,31 +1,49 @@
 import React, { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-type Props = {};
+interface SearchProps {
+  data: any[];
+  setData: React.Dispatch<React.SetStateAction<any[]>>;
+  isSearching: boolean;
+  setSearching: React.Dispatch<React.SetStateAction<boolean>>;
+  searchParams: URLSearchParams;
+  setSearchParams: (searchParams: URLSearchParams) => void;
+  searchTerm: string;
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+  domain: string;
+  setDomain: React.Dispatch<React.SetStateAction<string>>;
+}
 
-const Search = (props: Props) => {
-  const [data, setData] = useState([]);
-  const [isSearching, setSearching] = useState<boolean>(false);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [domain, setDomain] = useState<string>("");
+const Search: React.FC<SearchProps> = ({
+  data,
+  setData,
+  isSearching,
+  setSearching,
+  searchParams,
+  setSearchParams,
+  searchTerm,
+  setSearchTerm,
+  domain,
+  setDomain,
+}) => {
   const query = searchParams.get("name") || "";
 
   const handleSearchTerm = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
     const url: string = e.target.value;
-    const domainRegex: RegExp = /^(?:https?:\/\/)?(?:www\.)?([^./]+\.[^./]+\.[^./]+)\/?/i;
+    const domainRegex: RegExp =
+      /^(?:https?:\/\/)?(?:www\.)?([^./]+\.[^./]+\.[^./]+)\/?/i;
     const matches: RegExpMatchArray | null = url.match(domainRegex);
-        
+    
     if (url) {
       if (matches) {
         setDomain(matches[1]);
-        console.log(matches[1], );
       }
-      setSearchParams({ url });
+      const newParams = new URLSearchParams(url);
+      setSearchParams(newParams);
       setSearchTerm(url);
     } else {
-      setSearchParams({});
+      setSearchParams(new URLSearchParams());
       setSearchTerm("");
       setSearching(false);
     }
