@@ -7,7 +7,7 @@ type Props = {};
 const Catalog = (props: Props) => {
   const [data, setData] = useState<any[]>([]);
   const [isSearching, setSearching] = useState<boolean>(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [domain, setDomain] = useState<string>("");
   return (
@@ -17,8 +17,8 @@ const Catalog = (props: Props) => {
         setData={setData}
         isSearching={isSearching}
         setSearching={setSearching}
-        searchParams={searchParams}
-        setSearchParams={setSearchParams}
+        // searchParams={searchParams}
+        // setSearchParams={setSearchParams}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         domain={domain}

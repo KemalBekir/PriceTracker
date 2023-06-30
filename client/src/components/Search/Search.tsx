@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import * as catalogService from "@/services/catalogService";
 
 interface SearchProps {
   data: any[];
   setData: React.Dispatch<React.SetStateAction<any[]>>;
   isSearching: boolean;
   setSearching: React.Dispatch<React.SetStateAction<boolean>>;
-  searchParams: URLSearchParams;
-  setSearchParams: (searchParams: URLSearchParams) => void;
+  // searchParams: URLSearchParams;
+  // setSearchParams: (searchParams: URLSearchParams) => void;
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
   domain: string;
@@ -19,13 +20,14 @@ const Search: React.FC<SearchProps> = ({
   setData,
   isSearching,
   setSearching,
-  searchParams,
-  setSearchParams,
+  // searchParams,
+  // setSearchParams,
   searchTerm,
   setSearchTerm,
   domain,
   setDomain,
 }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("name") || "";
 
   const handleSearchTerm = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -34,12 +36,12 @@ const Search: React.FC<SearchProps> = ({
     const domainRegex: RegExp =
       /^(?:https?:\/\/)?(?:www\.)?([^./]+\.[^./]+\.[^./]+)\/?/i;
     const matches: RegExpMatchArray | null = url.match(domainRegex);
-    
+
     if (url) {
       if (matches) {
         setDomain(matches[1]);
       }
-      const newParams = new URLSearchParams(url);
+      const newParams = new URLSearchParams({ name: url });
       setSearchParams(newParams);
       setSearchTerm(url);
     } else {
@@ -49,8 +51,20 @@ const Search: React.FC<SearchProps> = ({
     }
   };
 
-  const submitSearch = (e: React.FormEvent<HTMLFormElement>): void => {
+  const submitSearch = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    console.log(query);
+
+    if (query) {
+      setTimeout(() => {
+        catalogService
+          .scrape(searchTerm, domain)
+          .then((result) => console.log(result));
+        setSearching(true);
+      }, 600);
+    } else if (searchTerm.length === 0) {
+      // TODO - new service to get all from DB
+    }
   };
 
   return (
@@ -61,7 +75,7 @@ const Search: React.FC<SearchProps> = ({
     >
       <label
         htmlFor="default-search"
-        className="sr-only mb-2 text-sm font-medium text-gray-900 "
+        className="sr-only mb-2 text-sm font-medium text-gray-900"
       >
         Search
       </label>
@@ -76,9 +90,9 @@ const Search: React.FC<SearchProps> = ({
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
             ></path>
           </svg>
@@ -86,7 +100,7 @@ const Search: React.FC<SearchProps> = ({
         <input
           type="search"
           id="default-search"
-          className="block w-full rounded-full border bg-white p-4 pl-10 text-lg text-gray-900 "
+          className="block w-full rounded-full border bg-white p-4 pl-10 text-lg text-gray-900"
           placeholder="Find amazon product"
           name="text"
           value={searchTerm}
