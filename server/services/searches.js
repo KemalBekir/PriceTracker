@@ -9,7 +9,10 @@ const targetWebsites = {
 };
 
 async function getAll() {
-  return Searches.find({});
+  return Searches.find({}).populate({
+    path: "prices",
+    select: ["price", "createdAt"]
+  });
 }
 
 async function getLatest() {
