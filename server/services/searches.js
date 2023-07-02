@@ -11,7 +11,7 @@ const targetWebsites = {
 async function getAll() {
   return Searches.find({}).populate({
     path: "prices",
-    select: ["price", "createdAt"]
+    select: ["price", "createdAt"],
   });
 }
 
@@ -25,8 +25,8 @@ async function getAllByOwner(owner) {
 
 async function getById(id) {
   return Searches.findById(id).populate({
-    path: "owner",
-    select: ["email", "username"],
+    path: "prices",
+    select: ["price", "createdAt"],
   });
 }
 

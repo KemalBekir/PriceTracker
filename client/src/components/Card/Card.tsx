@@ -1,27 +1,7 @@
+import { ItemProps } from "@/interfaces/interfaces";
 import React from "react";
 
-interface Price {
-  _id: string;
-  price: number;
-  createdAt: Date;
-}
-
-interface FeaturedItemProps {
-  _id: string;
-  url: string;
-  itemName: string;
-  prices: Price[];
-  img: string;
-}
-
-const Card: React.FC<FeaturedItemProps> = ({
-  _id,
-  url,
-  itemName,
-  prices,
-  img,
-}) => {
-  
+const Card: React.FC<ItemProps> = ({ _id, url, itemName, prices, img }) => {
   return (
     <div className="group relative">
       <div className="aspect-h-1 aspect-w-1 lg:aspect-none w-full overflow-hidden rounded-md bg-gray-200 drop-shadow-md group-hover:opacity-75 lg:h-80">
@@ -36,13 +16,15 @@ const Card: React.FC<FeaturedItemProps> = ({
           <h3 className="text-sm text-gray-700">
             <a href={`/catalog/${_id}`}>
               <span aria-hidden="true" className="absolute inset-0"></span>
-              {itemName}
+              {itemName.length > 25 ? itemName.substring(0, 30) : itemName}
             </a>
           </h3>
           {/* <p className="mt-1 text-sm text-gray-500">Black</p> */}
-          {/* TODO- add interace for prices */}
+          {/* TODO- add interface for prices */}
         </div>
-        <p className="text-sm font-medium text-gray-900">£{prices[0].price}</p>
+        <p className="text-sm font-medium text-gray-900">
+          £{prices[length - 1]?.price}
+        </p>
       </div>
     </div>
   );

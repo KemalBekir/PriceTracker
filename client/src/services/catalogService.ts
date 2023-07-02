@@ -20,3 +20,11 @@ export async function scrape(url: string, domain: string): Promise<any> {
     }).then((data) => data.json());
   }
   
+export async function getById(id:string) {
+  return fetch(`${catalogUrl}/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then((data) => data.json());
+}
