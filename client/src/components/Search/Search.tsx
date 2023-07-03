@@ -53,17 +53,19 @@ const Search: React.FC<SearchProps> = ({
 
   const submitSearch = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    console.log(query);
-
+  
     if (query) {
       setTimeout(() => {
         catalogService
           .scrape(searchTerm, domain)
-          .then((result) => console.log(result));
+          .then((result) => setData(result));
         setSearching(true);
+        setSearchTerm(""); // Reset the search term
       }, 600);
     } else if (searchTerm.length === 0) {
-      // TODO - new service to get all from DB
+      catalogService.getAll().then((result) => {
+        setData(result);
+      });
     }
   };
 

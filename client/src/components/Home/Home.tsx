@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Featured from "../Featured/Featured";
 
 type Props = {};
@@ -7,9 +8,9 @@ const Home = (props: Props) => {
   return (
     <>
       <div className="relative mt-2">
-        <div className="absolute left-1/2 top-1/3 z-10 m-auto -translate-x-1/2 -translate-y-1/2 transform cursor-pointer rounded-full bg-white px-5 py-3 text-3xl font-bold drop-shadow-lg">
+        <Link to='/catalog' className="absolute left-1/2 top-1/3 z-10 m-auto -translate-x-1/2 -translate-y-1/2 transform cursor-pointer rounded-full bg-white px-5 py-3 text-3xl font-bold drop-shadow-lg">
           Start Saving Now!
-        </div>
+        </Link>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
           <div className="grid gap-4">
             <div>

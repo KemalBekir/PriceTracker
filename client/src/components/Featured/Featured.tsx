@@ -48,6 +48,7 @@ const Featured = (props: Props) => {
   useEffect(() => {
     CatalogService.getAll().then((result) => {
       setData(result);
+      
     });
   }, []);
 
@@ -61,11 +62,7 @@ const Featured = (props: Props) => {
           {data?.map((item) => (
             <Card
               key={item._id}
-              _id={item._id}
-              url={item.url}
-              itemName={item.itemName}
-              prices={item.prices}
-              img={item.img}
+              data={item}
             />
           ))}
         </div>

@@ -11,3 +11,7 @@ export interface ItemProps {
   prices: Price[];
   img: string;
 }
+
+export interface DataProps {
+  data: ItemProps | null;
+}
