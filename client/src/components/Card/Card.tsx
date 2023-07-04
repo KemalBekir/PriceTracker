@@ -1,5 +1,6 @@
 import { DataProps, ItemProps } from "@/interfaces/interfaces";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Card: React.FC<DataProps> = ({ data }) => {
   let index = 0;
@@ -22,12 +23,12 @@ const Card: React.FC<DataProps> = ({ data }) => {
       <div className="mt-4 flex justify-between">
         <div>
           <h3 className="text-sm text-gray-700">
-            <a href={`/catalog/${data?._id}`}>
+            <Link to={`/catalog/${data?._id}`}>
               <span aria-hidden="true" className="absolute inset-0"></span>
               {data?.itemName.length > 25
                 ? data?.itemName.substring(0, 30)
                 : data?.itemName}
-            </a>
+            </Link>
           </h3>
           {/* <p className="mt-1 text-sm text-gray-500">Black</p> */}
           {/* TODO- add interface for prices */}

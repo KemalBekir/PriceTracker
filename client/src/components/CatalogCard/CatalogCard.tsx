@@ -23,19 +23,19 @@ const CatalogCard: React.FC<DataProps> = ({ data }) => {
   return (
     <Link to={`/catalog/649e127713f9ea00dfad82ca`}>
       <div className="group relative drop-shadow-md">
-        <div className="absolute inset-0 rounded-lg bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-40"></div>
+        <div className="absolute inset-0 rounded-lg bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-80"></div>
         <div className="aspect-h-1 aspect-w-1 lg:aspect-none w-full overflow-hidden rounded-md bg-gray-200 drop-shadow-md group-hover:opacity-75 lg:h-80">
           <img
             src={data?.img}
             alt="Card Image"
-            className="h-full w-full rounded-lg object-cover object-center"
+            className="h-full w-full rounded-lg object-contain object-center"
           />
         </div>
-        <div className="absolute bottom-3 left-5 rounded-full bg-black px-6 py-2 text-sm text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+        <div className="absolute bottom-3 left-5 rounded-full bg-white px-6 py-2 text-sm text-black opacity-0 transition duration-500 group-hover:opacity-100 hover:bg-black hover:text-white">
           <span className="font-bold">£{data?.prices[index].price}</span>
         </div>
-        <div className="absolute bottom-3 right-5 rounded-full bg-black px-6 py-2 text-sm text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <span className="font-bold">details</span>
+        <div className="absolute bottom-3 right-5 rounded-full bg-white px-6 py-2 text-sm text-black opacity-0 transition duration-500 group-hover:opacity-100 hover:bg-black hover:text-white">
+          <Link to={`/catalog/${data?._id}`} className="font-bold">details</Link>
         </div>
       </div>
     </Link>

@@ -15,8 +15,8 @@ const Navbar = (props: Props) => {
       <div className="fixed top-0 z-30 flex w-full items-center justify-between py-5">
         <div className="mx-auto flex w-5/6 items-center justify-between">
           <div className="flex w-full items-center justify-between gap-16">
-            <img className="h-9" src={Logo} alt="logo" />
-
+            <Link to="/" className="h-9 w-[210px]"><img className="h-9" src={Logo} alt="logo" /></Link>
+            
             {isAboveMediumScreens ? (
               <div className="flex w-full items-center justify-between">
                 <div className="flex items-center justify-between gap-8 text-sm">

@@ -7,8 +7,6 @@ interface SearchProps {
   setData: React.Dispatch<React.SetStateAction<any[]>>;
   isSearching: boolean;
   setSearching: React.Dispatch<React.SetStateAction<boolean>>;
-  // searchParams: URLSearchParams;
-  // setSearchParams: (searchParams: URLSearchParams) => void;
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
   domain: string;
@@ -20,8 +18,6 @@ const Search: React.FC<SearchProps> = ({
   setData,
   isSearching,
   setSearching,
-  // searchParams,
-  // setSearchParams,
   searchTerm,
   setSearchTerm,
   domain,
@@ -51,21 +47,23 @@ const Search: React.FC<SearchProps> = ({
     }
   };
 
-  const submitSearch = (e: FormEvent<HTMLFormElement>): void => {
+  const submitSearch = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
-  
+
     if (query) {
-      setTimeout(() => {
-        catalogService
-          .scrape(searchTerm, domain)
-          .then((result) => setData(result));
+      try {
         setSearching(true);
-        setSearchTerm(""); // Reset the search term
-      }, 600);
-    } else if (searchTerm.length === 0) {
-      catalogService.getAll().then((result) => {
-        setData(result);
-      });
+        setSearchTerm("");
+        await catalogService.scrape(searchTerm, domain);
+
+        const updatedData = await catalogService.getAll();
+        setData(updatedData);
+        setSearching(false);
+      } catch (error) {
+        // Handle error
+      }
     }
   };
 
@@ -116,6 +114,7 @@ const Search: React.FC<SearchProps> = ({
           Search
         </button>
       </div>
+      {isSearching && <div>Loading...</div>}
     </form>
   );
 };
