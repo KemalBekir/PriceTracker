@@ -15,3 +15,23 @@ export interface ItemProps {
 export interface DataProps {
   data: ItemProps | null;
 }
+
+export interface User {
+  _id: string;
+  username?: string;
+  email: string;
+  accessToken: string;
+}
+
+export interface AuthData {
+  email: string;
+  _id: string;
+  accessToken: string;
+}
+
+export interface AuthContextType {
+  user: AuthData;
+  userLogin: (authData: AuthData) => void;
+  userLogout: () => void;
+  isAuthenticated: boolean;
+}
