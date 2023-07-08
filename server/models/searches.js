@@ -10,6 +10,10 @@ const searchesSchema = new Schema(
       type: String,
       required: [true, "Url is required"],
     },
+    domain: {
+      type: String,
+      required: [true, "Domain is required"],
+    },
     itemName: {
       type: String,
       required: [true, "Provide name for this item"],

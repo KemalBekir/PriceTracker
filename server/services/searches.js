@@ -41,13 +41,13 @@ async function scrape(url, domain) {
   await page.goto(url);
 
   const scrapingFunction = targetWebsites[domain];
-  const result = await scrapingFunction(page, url); // Pass the 'page' and 'url' to the scraping function
+  const result = await scrapingFunction(page, url, domain); // Pass the 'page' and 'url' to the scraping function
   await browser.close();
 
   return result;
 }
 
-async function scrapeAmazon(page, url) {
+async function scrapeAmazon(page, url, domain) {
   const productName = await page.$eval("#productTitle", (element) =>
     element.textContent.trim()
   );
@@ -61,6 +61,7 @@ async function scrapeAmazon(page, url) {
 
   const result = await createOrUpdateSearches(
     url,
+    domain,
     productName,
     formattedPrice,
     img
@@ -92,6 +93,19 @@ async function createOrUpdateSearches(url, productName, formattedPrice, img) {
   return result;
 }
 
+async function getDailyPrice() {
+  const data = await Searches.find({}).toArray();
+  console.log("Cron is running");
+
+  for (const item of data) {
+    const browser = await puppeteer.launch({ headless: "new" });
+    const page = await browser.newPage();
+    await page.goto(item.url);
+    await scrapeAmazon(page, item.url, item.domain);
+    await browser.close();
+  }
+}
+
 module.exports = {
   scrape,
   getById,
@@ -99,4 +113,5 @@ module.exports = {
   getAllByOwner,
   getLatest,
   deleteById,
+  getDailyPrice,
 };

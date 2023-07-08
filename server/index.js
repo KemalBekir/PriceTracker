@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const dailyScrape = require("./cron");
 
 const cors = require("./middleware/cors");
 const auth = require("./middleware/auth");
