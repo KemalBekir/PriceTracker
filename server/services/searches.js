@@ -70,9 +70,14 @@ async function scrapeAmazon(page, url, domain) {
   return result;
 }
 
-async function createOrUpdateSearches(url, productName, formattedPrice, img) {
+async function createOrUpdateSearches(
+  url,
+  domain,
+  productName,
+  formattedPrice,
+  img
+) {
   let result = await Searches.findOne({ url });
-
   if (!result) {
     result = new Searches({
       url,
@@ -94,15 +99,23 @@ async function createOrUpdateSearches(url, productName, formattedPrice, img) {
 }
 
 async function getDailyPrice() {
-  const data = await Searches.find({}).toArray();
-  console.log("Cron is running");
+  try {
+    const data = await Searches.find({})
+      .populate({
+        path: "prices",
+        select: ["price", "createdAt"],
+      })
+      .lean();
 
-  for (const item of data) {
-    const browser = await puppeteer.launch({ headless: "new" });
-    const page = await browser.newPage();
-    await page.goto(item.url);
-    await scrapeAmazon(page, item.url, item.domain);
-    await browser.close();
+    for (const item of data) {
+      const browser = await puppeteer.launch({ headless: "new" });
+      const page = await browser.newPage();
+      await page.goto(item.url);
+      await scrapeAmazon(page, item.url, item.domain);
+      await browser.close();
+    }
+  } catch (error) {
+    console.error(error);
   }
 }
 

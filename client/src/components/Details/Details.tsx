@@ -4,6 +4,7 @@ import * as CatalogService from "@/services/catalogService";
 import { ItemProps } from "@/interfaces/interfaces";
 import useLoadingState from "@/hooks/useLoadingState";
 import Spinner from "../Spinner/Spinner";
+import Chart from "../Chart/Chart";
 
 const Details = () => {
   const { isLoading, startLoading, stopLoading } = useLoadingState();
@@ -75,6 +76,7 @@ const Details = () => {
             </div>
           </div>
         </div>
+        {data && <Chart data={data?.prices} itemName={data.itemName} />}
       </section>
     </>
   );

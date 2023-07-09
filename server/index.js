@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const dailyScrape = require("./cron");
+const cron = require("node-cron");
+const { getDailyPrice } = require("./services/searches");
 
 const cors = require("./middleware/cors");
 const auth = require("./middleware/auth");
@@ -32,6 +33,12 @@ async function start() {
 
   mongoose.connection.on("connected", () => {
     console.log("mongoDB connected");
+  });
+  cron.schedule("0 */23 * * *", () => {
+    getDailyPrice().catch((error) => {
+      console.error("Unhandled promise", error);
+    });
+    console.log('Chron job is running');
   });
 
   const app = express();
