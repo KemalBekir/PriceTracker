@@ -43,12 +43,12 @@ const Login = (props: Props) => {
                 Password
               </label>
               <div className="text-sm">
-                <a
+                {/* <a
                   href="#"
                   className="font-semibold text-black hover:text-emerald-600"
                 >
                   Forgot password?
-                </a>
+                </a> */}
               </div>
             </div>
             <div className="mt-2">

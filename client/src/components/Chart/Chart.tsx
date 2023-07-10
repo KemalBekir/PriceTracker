@@ -25,7 +25,7 @@ const Chart: React.FC<ChartProps> = ({ data, itemName }) => {
     return (
       <div className="custom-legend text-center mt-1">
         <span className="legend-icon" style={{ backgroundColor: "#8884d8" }} />
-        <span className="legend-label font-bold">{itemName.substring(0,30)}</span>
+        <span className="legend-label font-bold">{itemName.substring(0,35)}...</span>
       </div>
     );
   };
@@ -38,7 +38,7 @@ const Chart: React.FC<ChartProps> = ({ data, itemName }) => {
         <YAxis />
         <Tooltip />
         <Legend content={<CustomLegend />} />
-        <Line type="monotone" dataKey="price" stroke="#8884d8" />
+        <Line type="monotone" dataKey="price" stroke="#000000" />
       </LineChart>
     </div>
   );

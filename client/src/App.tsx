@@ -6,6 +6,7 @@ import Catalog from "./components/Catalog/Catalog";
 import Details from "./components/Details/Details";
 import Login from "./components/Login/Login";
 import { AuthProvider } from "./cotexts/authContext";
+import Register from "./components/Register/Register";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/catalog" element={<Catalog />} />
           <Route path="/catalog/:itemId" element={<Details />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </AuthProvider>
       <Footer />
