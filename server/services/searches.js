@@ -51,7 +51,7 @@ async function scrapeAmazon(page, url, domain) {
   const productName = await page.$eval("#productTitle", (element) =>
     element.textContent.trim()
   );
-  const priceElement = await page.$(".a-offscreen");
+  const priceElement = await page.$(".a-price .a-offscreen");
   const price = await (
     await priceElement.getProperty("textContent")
   ).jsonValue();
@@ -89,7 +89,6 @@ async function createOrUpdateSearches(
   const newPrice = new Price({
     price: formattedPrice,
   });
-  console.log(formattedPrice);
   const savedPrice = await newPrice.save();
 
   result.prices.push(savedPrice);
@@ -106,16 +105,15 @@ async function getDailyPrice() {
         select: ["price", "createdAt"],
       })
       .lean();
-    for (const item of data) {
-      console.log(item.url, "<-----");
+     for (const item of data) {
       const browser = await puppeteer.launch({ headless: "new" });
       const page = await browser.newPage();
       await page.goto(item.url);
       await scrapeAmazon(page, item.url, item.domain);
       await browser.close();
     }
+    // console.log('Finished');
   } catch (error) {
-    console.log(item.itemName, "<<<<<<<<<");
     console.error(error);
   }
 }

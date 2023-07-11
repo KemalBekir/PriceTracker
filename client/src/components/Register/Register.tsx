@@ -1,5 +1,13 @@
 import React from "react";
 import Logo from "@/assets/pricetracker-logo.png";
+import {
+  Formik,
+  FormikHelpers,
+  FormikProps,
+  Form,
+  Field,
+  FieldProps,
+} from "formik";
 
 type Props = {};
 
@@ -9,13 +17,13 @@ const Register = (props: Props) => {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img className="mx-auto h-10 w-auto" src={Logo} alt="Price Tracker" />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Sign up
+          Register
         </h2>
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form className="space-y-6" action="#" method="POST">
-        <div>
+          <div>
             <label
               htmlFor="username"
               className="block text-sm font-medium leading-6 text-gray-900"
@@ -86,7 +94,7 @@ const Register = (props: Props) => {
               type="submit"
               className="flex w-full justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-emerald-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Sign in
+              Sign up
             </button>
           </div>
         </form>

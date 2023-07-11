@@ -35,3 +35,10 @@ export interface AuthContextType {
   userLogout: () => void;
   isAuthenticated: boolean;
 }
+
+export interface FormValues {
+  username: string;
+  email: string;
+  password: string;
+  rePass: string;
+}
