@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Catalog from "./components/Catalog/Catalog";
 import Details from "./components/Details/Details";
 import Login from "./components/Login/Login";
-import { AuthProvider } from "./cotexts/authContext";
+import { AuthProvider } from "./contexts/authContext";
 import Register from "./components/Register/Register";
 
 function App() {
