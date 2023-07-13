@@ -10,6 +10,7 @@ type Props = {};
 const Featured = (props: Props) => {
   const { isLoading, startLoading, stopLoading } = useLoadingState();
   const [data, setData] = useState<ItemProps[]>([]);
+  
 
   useEffect(() => {
     startLoading();

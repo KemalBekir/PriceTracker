@@ -7,6 +7,8 @@ import Details from "./components/Details/Details";
 import Login from "./components/Login/Login";
 import { AuthProvider } from "./contexts/authContext";
 import Register from "./components/Register/Register";
+import Logout from "./components/Logout/Logout";
+import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
   return (
@@ -19,6 +21,9 @@ function App() {
           <Route path="/catalog/:itemId" element={<Details />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/logout" element={<Logout />} />
+          </Route>
         </Routes>
       </AuthProvider>
       <Footer />

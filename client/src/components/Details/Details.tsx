@@ -10,6 +10,7 @@ const Details = () => {
   const { isLoading, startLoading, stopLoading } = useLoadingState();
   const [data, setData] = useState<ItemProps | null>(null);
   const { itemId } = useParams<string>();
+  const index = data?.prices ? data.prices.length - 1 : 0;
 
   useEffect(() => {
     if (itemId) {
@@ -52,7 +53,7 @@ const Details = () => {
               <div className="mb-5 mt-6 flex items-center border-b-2 border-gray-200 pb-5"></div>
               <div className="flex">
                 <span className="title-font text-2xl font-medium text-gray-900">
-                  £{data?.prices[0].price}
+                  £{data?.prices[index].price}
                 </span>
                 <a
                   href={data?.url}

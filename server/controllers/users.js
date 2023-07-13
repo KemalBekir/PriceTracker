@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { isGuest, isAuth, isOwner } = require("../middleware/guards");
-const { logout } = require("../services/users");
+const { logout, register } = require("../services/users");
 const mapErrors = require("../utils/mappers");
 
 router.post("/register", isGuest(), async (req, res) => {

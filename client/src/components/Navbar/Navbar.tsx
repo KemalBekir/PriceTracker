@@ -3,20 +3,24 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import { useAuthContext } from "@/contexts/authContext";
 
 type Props = {};
 
 const Navbar = (props: Props) => {
   const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)");
   const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
+  const { user } = useAuthContext()!;
 
   return (
     <nav className="sticky top-0 z-20 h-[90px] border-b border-gray-200 bg-white bg-opacity-30 backdrop-blur-lg backdrop-filter">
       <div className="fixed top-0 z-30 flex w-full items-center justify-between py-5">
         <div className="mx-auto flex w-5/6 items-center justify-between">
           <div className="flex w-full items-center justify-between gap-16">
-            <Link to="/" className="h-9 w-[210px]"><img className="h-9" src={Logo} alt="logo" /></Link>
-            
+            <Link to="/" className="h-9 w-[210px]">
+              <img className="h-9" src={Logo} alt="logo" />
+            </Link>
+
             {isAboveMediumScreens ? (
               <div className="flex w-full items-center justify-between">
                 <div className="flex items-center justify-between gap-8 text-sm">
@@ -39,19 +43,29 @@ const Navbar = (props: Props) => {
                     Catalogue
                   </Link>
                 </div>
-                <div className="flex items-center justify-between gap-8">
-                  <Link
-                    className="text-xl font-semibold transition duration-500 hover:text-emerald-600"
-                    to="/login"
-                  >
-                    Sign In
-                  </Link>
-                  <Link className="text-xl font-semibold" to="/register">
-                    <button className="rounded-full bg-black px-5 py-3 text-white transition duration-500 hover:bg-emerald-600 hover:text-white">
-                      Become a Member
-                    </button>
-                  </Link>
-                </div>
+                {user.email ? (
+                  <div className="flex items-center justify-between gap-8">
+                    <Link className="text-xl font-semibold" to="/logout">
+                      <button className="rounded-full bg-black px-5 py-3 text-white transition duration-500 hover:bg-emerald-600 hover:text-white">
+                        Logout
+                      </button>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between gap-8">
+                    <Link
+                      className="text-xl font-semibold transition duration-500 hover:text-emerald-600"
+                      to="/login"
+                    >
+                      Sign In
+                    </Link>
+                    <Link className="text-xl font-semibold" to="/register">
+                      <button className="rounded-full bg-black px-5 py-3 text-white transition duration-500 hover:bg-emerald-600 hover:text-white">
+                        Become a Member
+                      </button>
+                    </Link>
+                  </div>
+                )}
               </div>
             ) : (
               <>

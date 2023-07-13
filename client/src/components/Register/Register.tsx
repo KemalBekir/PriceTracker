@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { FormValues } from "@/interfaces/interfaces";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "@/contexts/authContext";
+import { useAuthContext } from "@/contexts/authContext";
 import * as userService from "@/services/userService";
 
 const initialValues: FormValues = {
@@ -29,7 +29,7 @@ const validationSchema = Yup.object({
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
-  const { userLogin } = useContext(AuthContext);
+  const { userLogin } = useAuthContext()!;
   const handleSubmit = (values: FormValues) => {
     const { username, email, password, rePass } = values;
     userService.registerUser({ username, email, password }).then((authData) => {
@@ -72,7 +72,7 @@ const Register: React.FC = () => {
                   type="text"
                   autoComplete="text"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="mb-1  block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
                 <ErrorMessage
                   name="username"
@@ -96,7 +96,7 @@ const Register: React.FC = () => {
                   type="email"
                   autoComplete="email"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="mb-1 block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
                 <ErrorMessage
                   name="email"
@@ -110,7 +110,7 @@ const Register: React.FC = () => {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="mb-1 block  pl-2 text-sm font-medium leading-6 text-gray-900"
                 >
                   Password
                 </label>
@@ -123,10 +123,35 @@ const Register: React.FC = () => {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="mb-1 block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
                 <ErrorMessage
                   name="password"
+                  component="div"
+                  className="text-sm text-red-500"
+                />
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center justify-between">
+                <label
+                  htmlFor="rePass"
+                  className="mb-1 block  pl-2 text-sm font-medium leading-6 text-gray-900"
+                >
+                  Confirm Password
+                </label>
+                <div className="text-sm"></div>
+              </div>
+              <div className="mt-2">
+                <Field
+                  id="rePass"
+                  name="rePass"
+                  type="password"
+                  required
+                  className="mb-1 block w-full rounded-md border-0 py-1.5 pl-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+                <ErrorMessage
+                  name="rePass"
                   component="div"
                   className="text-sm text-red-500"
                 />
