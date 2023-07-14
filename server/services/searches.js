@@ -81,6 +81,7 @@ async function createOrUpdateSearches(
   if (!result) {
     result = new Searches({
       url,
+      domain,
       itemName: productName,
       img,
     });
@@ -105,7 +106,7 @@ async function getDailyPrice() {
         select: ["price", "createdAt"],
       })
       .lean();
-     for (const item of data) {
+    for (const item of data) {
       const browser = await puppeteer.launch({ headless: "new" });
       const page = await browser.newPage();
       await page.goto(item.url);

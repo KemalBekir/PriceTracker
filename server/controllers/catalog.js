@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
 router.post("/scrape", async (req, res) => {
   const url = req.body.url;
   const domain = req.body.domain;
-  
+
   try {
     const result = await api.scrape(url, domain);
     res.status(201).json(result);

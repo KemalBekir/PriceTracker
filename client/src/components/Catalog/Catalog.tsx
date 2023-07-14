@@ -5,6 +5,7 @@ import CatalogCard from "../CatalogCard/CatalogCard";
 import * as CatalogService from "@/services/catalogService";
 import useLoadingState from "@/hooks/useLoadingState";
 import Spinner from "../Spinner/Spinner";
+import Pagination from "../Pagination/Pagination";
 
 type Props = {};
 
@@ -13,9 +14,16 @@ const Catalog = (props: Props) => {
 
   const [data, setData] = useState<ItemProps[]>([]);
   const [isSearching, setSearching] = useState<boolean>(false);
-  // const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [domain, setDomain] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(12);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  let currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   useEffect(() => {
     startLoading();
@@ -46,10 +54,19 @@ const Catalog = (props: Props) => {
       />
 
       <div className="mt-2 grid cursor-pointer grid-cols-2 gap-4 md:grid-cols-3">
-        {data?.map((item) => (
+        {currentItems?.map((item) => (
           <CatalogCard key={item._id} data={item} />
         ))}
       </div>
+      {data.length > itemsPerPage ? (
+        <Pagination
+          itemsPerPage={itemsPerPage}
+          totalItems={data.length}
+          paginate={paginate}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 };

@@ -34,7 +34,7 @@ const Search: React.FC<SearchProps> = ({
     const matches: RegExpMatchArray | null = url.match(domainRegex);
 
     if (url) {
-      if (matches) {
+      if (matches) {        
         setDomain(matches[1]);
       }
       const newParams = new URLSearchParams({ name: url });
@@ -56,6 +56,7 @@ const Search: React.FC<SearchProps> = ({
       try {
         setSearching(true);
         setSearchTerm("");
+        
         await catalogService.scrape(searchTerm, domain);
 
         const updatedData = await catalogService.getAll();
