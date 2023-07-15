@@ -7,6 +7,7 @@ import useLoadingState from "@/hooks/useLoadingState";
 import Spinner from "../Spinner/Spinner";
 import Pagination from "../Pagination/Pagination";
 
+
 type Props = {};
 
 const Catalog = (props: Props) => {
@@ -28,14 +29,19 @@ const Catalog = (props: Props) => {
   useEffect(() => {
     startLoading();
     CatalogService.getAll()
-      .then((result) => setData(result))
+      .then((result) => {
+        setData(result);
+      })
       .catch((error) => {
-        //TODO - Handle Error
+        // TODO: Handle Error
       })
       .finally(() => {
         stopLoading();
       });
   }, []);
+
+  // Calculate the pageCount based on the total number of items
+  const pageCount = Math.ceil(data.length / itemsPerPage);
 
   return (
     <>
@@ -45,8 +51,6 @@ const Catalog = (props: Props) => {
         setData={setData}
         isSearching={isSearching}
         setSearching={setSearching}
-        // searchParams={searchParams}
-        // setSearchParams={setSearchParams}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         domain={domain}
@@ -58,14 +62,12 @@ const Catalog = (props: Props) => {
           <CatalogCard key={item._id} data={item} />
         ))}
       </div>
-      {data.length > itemsPerPage ? (
+      {data.length > itemsPerPage && (
         <Pagination
           itemsPerPage={itemsPerPage}
           totalItems={data.length}
           paginate={paginate}
         />
-      ) : (
-        ""
       )}
     </>
   );

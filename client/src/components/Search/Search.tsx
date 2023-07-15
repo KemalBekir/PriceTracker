@@ -1,6 +1,8 @@
 import React, { FormEvent, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import * as catalogService from "@/services/catalogService";
+import useLoadingState from "@/hooks/useLoadingState";
+import Spinner from "../Spinner/Spinner";
 
 interface SearchProps {
   data: any[];
@@ -23,6 +25,7 @@ const Search: React.FC<SearchProps> = ({
   domain,
   setDomain,
 }) => {
+  const { isLoading, startLoading, stopLoading } = useLoadingState();
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("name") || "";
 
@@ -34,16 +37,19 @@ const Search: React.FC<SearchProps> = ({
     const matches: RegExpMatchArray | null = url.match(domainRegex);
 
     if (url) {
-      if (matches) {        
+      startLoading();
+      if (matches) {
         setDomain(matches[1]);
       }
       const newParams = new URLSearchParams({ name: url });
       setSearchParams(newParams);
       setSearchTerm(url);
+      stopLoading();
     } else {
       setSearchParams(new URLSearchParams());
       setSearchTerm("");
       setSearching(false);
+      stopLoading();
     }
   };
 
@@ -56,7 +62,7 @@ const Search: React.FC<SearchProps> = ({
       try {
         setSearching(true);
         setSearchTerm("");
-        
+
         await catalogService.scrape(searchTerm, domain);
 
         const updatedData = await catalogService.getAll();
@@ -115,7 +121,7 @@ const Search: React.FC<SearchProps> = ({
           Search
         </button>
       </div>
-      {isSearching && <div>Loading...</div>}
+      {isSearching && <Spinner />}
     </form>
   );
 };
