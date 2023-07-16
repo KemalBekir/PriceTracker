@@ -9,6 +9,7 @@ import { AuthProvider } from "./contexts/authContext";
 import Register from "./components/Register/Register";
 import Logout from "./components/Logout/Logout";
 import PrivateRoute from "./routes/PrivateRoute";
+import AboutPage from "./components/About/About";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/catalog/:itemId" element={<Details />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route element={<PrivateRoute />}>
             <Route path="/logout" element={<Logout />} />
           </Route>

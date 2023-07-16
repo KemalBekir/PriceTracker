@@ -7,10 +7,9 @@ import useLoadingState from "@/hooks/useLoadingState";
 import Spinner from "../Spinner/Spinner";
 import Pagination from "../Pagination/Pagination";
 
-
 type Props = {};
 
-const Catalog = (props: Props) => {
+const Catalog: React.FC<Props> = (props: Props) => {
   const { isLoading, startLoading, stopLoading } = useLoadingState();
 
   const [data, setData] = useState<ItemProps[]>([]);
@@ -18,11 +17,11 @@ const Catalog = (props: Props) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [domain, setDomain] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(12);
+  const itemsPerPage = 12;
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  let currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -40,7 +39,6 @@ const Catalog = (props: Props) => {
       });
   }, []);
 
-  // Calculate the pageCount based on the total number of items
   const pageCount = Math.ceil(data.length / itemsPerPage);
 
   return (
@@ -57,15 +55,17 @@ const Catalog = (props: Props) => {
         setDomain={setDomain}
       />
 
-      <div className="mt-2 grid cursor-pointer grid-cols-2 gap-4 md:grid-cols-3">
-        {currentItems?.map((item) => (
+      <div className="mt-2 grid cursor-pointer min-h-full mx-3 grid-cols-2 gap-4 md:grid-cols-3">
+        {currentItems.map((item) => (
           <CatalogCard key={item._id} data={item} />
         ))}
       </div>
+
       {data.length > itemsPerPage && (
         <Pagination
           itemsPerPage={itemsPerPage}
           totalItems={data.length}
+          currentPage={currentPage}
           paginate={paginate}
         />
       )}
