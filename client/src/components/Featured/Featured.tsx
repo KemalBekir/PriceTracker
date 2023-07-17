@@ -27,7 +27,7 @@ const Featured = (props: Props) => {
       });
   }, []);
 
-  const limitedData = data.slice(0, 4); // Limit to 4 items
+  const limitedData = data.slice(-4); // Limit to 4 items
 
   return (
     <>

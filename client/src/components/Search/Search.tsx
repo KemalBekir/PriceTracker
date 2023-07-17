@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import * as catalogService from "@/services/catalogService";
 import useLoadingState from "@/hooks/useLoadingState";
 import Spinner from "../Spinner/Spinner";
+import { toast } from "react-toastify";
 
 interface SearchProps {
   data: any[];
@@ -63,13 +64,15 @@ const Search: React.FC<SearchProps> = ({
         setSearching(true);
         setSearchTerm("");
 
-        await catalogService.scrape(searchTerm, domain);
-
+        const result = await catalogService.scrape(searchTerm, domain);
+        if (result.message) {
+          toast.error(result.message);
+        }
         const updatedData = await catalogService.getAll();
         setData(updatedData);
         setSearching(false);
       } catch (error) {
-        // Handle error
+        toast.error((error as Error).message);
       }
     }
   };

@@ -6,6 +6,8 @@ import { FormValues } from "@/interfaces/interfaces";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "@/contexts/authContext";
 import * as userService from "@/services/userService";
+import { toast } from "react-toastify";
+
 
 const initialValues: FormValues = {
   username: "",
@@ -34,9 +36,9 @@ const Register: React.FC = () => {
     const { username, email, password, rePass } = values;
     userService.registerUser({ username, email, password }).then((authData) => {
       if (authData.message) {
-        //TODO - Error notification
+        toast.error(authData.message);
       } else {
-        //TODO - Success notification
+        toast.success(`Welcome ${email}`)
         userLogin(authData);
         navigate("/");
       }
