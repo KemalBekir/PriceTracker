@@ -38,7 +38,7 @@ const Details = () => {
           <div className="mx-auto flex flex-wrap lg:w-4/5">
             <img
               alt="ecommerce"
-              className="w-full rounded border border-gray-200 object-cover object-center lg:w-1/2"
+              className="w-full rounded border border-gray-200 object-contain max-h-[403px] object-center lg:w-1/2"
               src={data?.img}
             />
             <div className="mt-6 w-full lg:mt-0 lg:w-1/2 lg:py-6 lg:pl-10">
@@ -59,7 +59,7 @@ const Details = () => {
                   href={data?.url}
                   className="ml-auto flex rounded border-0 bg-red-500 px-6 py-2 text-white hover:bg-red-600 focus:outline-none"
                 >
-                  Link
+                  Amazon Link
                 </a>
                 {/* <button className="ml-4 inline-flex h-10 w-10 items-center justify-center rounded-full border-0 bg-gray-200 p-0 text-gray-500">
                   <svg

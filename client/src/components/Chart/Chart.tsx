@@ -8,6 +8,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  ResponsiveContainer,
 } from "recharts";
 
 interface ChartProps {
@@ -23,23 +24,27 @@ const Chart: React.FC<ChartProps> = ({ data, itemName }) => {
 
   const CustomLegend = () => {
     return (
-      <div className="custom-legend text-center mt-1">
+      <div className="custom-legend mt-1 text-center">
         <span className="legend-icon" style={{ backgroundColor: "#8884d8" }} />
-        <span className="legend-label font-bold">{itemName.substring(0,35)}...</span>
+        <span className="legend-label font-bold">
+          {itemName.substring(0, 35)}...
+        </span>
       </div>
     );
   };
 
   return (
-    <div className="flex justify-center">
-      <LineChart width={600} height={300} data={chartData}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" />
-        <YAxis />
-        <Tooltip />
-        <Legend content={<CustomLegend />} />
-        <Line type="monotone" dataKey="price" stroke="#000000" />
-      </LineChart>
+    <div className="flex justify-center items-center">
+      <ResponsiveContainer width="95%" height={300}>
+        <LineChart   data={chartData}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip />
+          <Legend content={<CustomLegend />} />
+          <Line type="monotone" dataKey="price" stroke="#000000" />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 };

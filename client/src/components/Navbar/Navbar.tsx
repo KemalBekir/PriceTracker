@@ -70,7 +70,7 @@ const Navbar = (props: Props) => {
             ) : (
               <>
                 <button
-                  className="rounded-full bg-emerald-400 p-2"
+                  className="rounded-full bg-black p-2"
                   onClick={() => setIsMenuToggled(!isMenuToggled)}
                 >
                   <Bars3Icon className="h-6 w-6 text-white" />
@@ -83,21 +83,21 @@ const Navbar = (props: Props) => {
 
       {/* MOBILE MENU MODAL */}
       {!isAboveMediumScreens && isMenuToggled && (
-        <div className="bototm-0 fixed right-0 z-40 min-h-screen w-[300px] bg-emerald-400 drop-shadow-xl ">
+        <div className="bototm-0 fixed right-0 z-40 min-h-screen w-[300px] bg-white drop-shadow-xl ">
           <div className="flex justify-end p-12">
             <button onClick={() => setIsMenuToggled(!isMenuToggled)}>
-              <XMarkIcon className="h-8 w-8 text-white" />
+              <XMarkIcon className="h-8 w-8 text-black" />
             </button>
           </div>
           <div className="ml-[33%] flex flex-col gap-10 text-2xl">
-            <Link className="font-bold text-white hover:text-black" to="/">
+            <Link className="font-bold text-black hover:text-black" to="/">
               Home
             </Link>
-            <Link className="font-bold text-white hover:text-black" to="/about">
+            <Link className="font-bold text-black hover:text-black" to="/about">
               About us
             </Link>
             <Link
-              className="font-bold text-white hover:text-black"
+              className="font-bold text-black hover:text-black"
               to="/catalog"
             >
               Catalogue

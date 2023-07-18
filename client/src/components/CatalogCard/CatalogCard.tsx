@@ -25,11 +25,13 @@ const CatalogCard: React.FC<DataProps> = ({ data }) => {
       <div className="group relative drop-shadow-md">
         <div className="absolute inset-0 rounded-lg bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-80"></div>
         <div className="aspect-h-1 aspect-w-1 lg:aspect-none w-full overflow-hidden rounded-md bg-gray-200 drop-shadow-md group-hover:opacity-75 lg:h-80">
-          <img
-            src={data?.img}
-            alt="Card Image"
-            className="h-full w-full rounded-lg object-contain object-center"
-          />
+          <div className="p-2" style={{ paddingTop: "100%" }}>
+            <img
+              src={data?.img}
+              alt="Card Image"
+              className="absolute top-0 left-0 h-full w-full rounded-lg object-contain object-center"
+            />
+          </div>
         </div>
         <div className="absolute bottom-3 left-5 rounded-full bg-white px-6 py-2 text-sm text-black opacity-0 transition duration-500 hover:bg-black hover:text-white group-hover:opacity-100">
           <span className="font-bold">£{data?.prices[index].price}</span>
