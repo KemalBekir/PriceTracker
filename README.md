@@ -68,22 +68,22 @@ This will start the React development server.
 </div>
 
 <div align=center style="display: flex; flex-direction: row; justify-content: center; align-items: center; margin: 3px auto">
-    <img src="/Screenshots/1.png" alt="Desktop 1" align=top width="450">
-    <img src="/Screenshots/2.png" alt="Desktop 2" align=top width="450">
+    <img src="/Screenshots/1.png" alt="Desktop 1" align=top width="350">
+    <img src="/Screenshots/2.png" alt="Desktop 2" align=top width="350">
 </div>
 
 ---
 
 <div align=center style="display: flex; flex-direction: row; justify-content: center; align-items: center; margin: 3px auto">
-    <img src="/Screenshots/3.png" alt="Desktop 3" align=top width="450">
-    <img src="/Screenshots/4.png" alt="Desktop 4" align=top width="450">
+    <img src="/Screenshots/3.png" alt="Desktop 3" align=top width="350">
+    <img src="/Screenshots/4.png" alt="Desktop 4" align=top width="350">
 </div>
 
 ---
 
 <div align=center style="display: flex; flex-direction: row; justify-content: center; align-items: center; margin: 6px auto">
-    <img src="/Screenshots/5.png" alt="Desktop 5" align=top width="450">
-    <img src="/Screenshots/6.png" alt="Desktop 6" align=top width="450">
+    <img src="/Screenshots/5.png" alt="Desktop 5" align=top width="350">
+    <img src="/Screenshots/6.png" alt="Desktop 6" align=top width="350">
 </div>
 
 ---
