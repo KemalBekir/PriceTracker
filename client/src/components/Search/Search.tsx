@@ -79,7 +79,7 @@ const Search: React.FC<SearchProps> = ({
 
   return (
     <form
-      className="m-auto my-20 w-[60%] items-center"
+      className="m-auto my-20 w-[60%] items-center xs:w-[90%]"
       method="get"
       onSubmit={submitSearch}
     >

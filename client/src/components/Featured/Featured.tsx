@@ -10,7 +10,6 @@ type Props = {};
 const Featured = (props: Props) => {
   const { isLoading, startLoading, stopLoading } = useLoadingState();
   const [data, setData] = useState<ItemProps[]>([]);
-  
 
   useEffect(() => {
     startLoading();
@@ -39,7 +38,9 @@ const Featured = (props: Props) => {
           </h2>
           <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             {limitedData.map((item) => (
-              <Card key={item._id} data={item} />
+              <div className="w-full" key={item._id}>
+                <Card data={item} />
+              </div>
             ))}
           </div>
         </div>

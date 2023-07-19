@@ -17,7 +17,7 @@ const Card: React.FC<DataProps> = ({ data }) => {
         <img
           src={data?.img}
           alt=""
-          className="h-full w-full object-contain object-center lg:h-full lg:w-full"
+          className="h-64 w-full max-w-full object-contain object-center lg:h-full lg:w-full"
         />
       </div>
       <div className="mt-4 flex justify-between">
