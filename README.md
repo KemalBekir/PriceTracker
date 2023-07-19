@@ -59,7 +59,9 @@ This will start the React development server.
 2. Add an Amazon product link to start tracking its price.
 3. View the item's details page to see the price history graph and track price changes over time.
 
-## Screenshots
+<div align="center">
+    <h1 style="text-align: center;">Screenshots</h1>
+</div>
 
 <div align="center">
     <h2 style="text-align: center;">Desktop</h2>
