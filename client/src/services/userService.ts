@@ -1,4 +1,4 @@
-const userUrl = "http://localhost:5000/users";
+const userUrl = `${process.env.API_URL}/users`;
 
 export async function loginUser({
   email,

@@ -1,4 +1,4 @@
-const catalogUrl = "http://localhost:5000/catalog";
+const catalogUrl = `${process.env.API_URL}/catalog`;
 
 export async function getAll() {
   return fetch(`${catalogUrl}/`, {
