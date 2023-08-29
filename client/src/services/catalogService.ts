@@ -1,4 +1,4 @@
-const catalogUrl = `${process.env.API_URL}/catalog`;
+const catalogUrl = `https://pricetracker-api.onrender.com/catalog`;
 
 export async function getAll() {
   return fetch(`${catalogUrl}/`, {

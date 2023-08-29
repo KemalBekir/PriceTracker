@@ -1,4 +1,4 @@
-const userUrl = `${process.env.API_URL}/users`;
+const userUrl = `https://pricetracker-api.onrender.com/users`;
 
 export async function loginUser({
   email,
