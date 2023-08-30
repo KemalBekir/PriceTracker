@@ -48,13 +48,20 @@ async function scrape(url, domain) {
 }
 
 async function scrapeAmazon(page, url, domain) {
-  const productName = await page.$eval("#productTitle", (element) =>
-    element.textContent.trim()
-  );
+  const productName = await page.evaluate(() => {
+    const productTitleElement = document.querySelector("#productTitle");
+    if (productTitleElement) {
+      return productTitleElement.textContent.trim();
+    } else {
+      return ""; // or some default value if the element is not found
+    }
+  });
+
   const priceElement = await page.$(".a-price .a-offscreen");
   const price = await (
     await priceElement.getProperty("textContent")
   ).jsonValue();
+
   const formattedPrice = parseFloat(price.replace(/,/g, "").substring(1));
   const imgElement = await page.$(".a-dynamic-image");
   const img = await (await imgElement.getProperty("src")).jsonValue();
