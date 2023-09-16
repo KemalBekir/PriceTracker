@@ -56,13 +56,25 @@ async function scrapeAmazon(page, url, domain) {
       return ""; // or some default value if the element is not found
     }
   });
+  const wholePriceElement = await page.$(".a-price-whole");
+  const fractionPriceElement = await page.$(".a-price-fraction");
 
-  const priceElement = await page.$(".a-price .a-offscreen");
-  const price = await (
-    await priceElement.getProperty("textContent")
+  // Get the text content of the whole and fraction parts
+  const wholePrice = await (
+    await wholePriceElement.getProperty("textContent")
+  ).jsonValue();
+ 
+
+  const fractionPrice = await (
+    await fractionPriceElement.getProperty("textContent")
   ).jsonValue();
 
-  const formattedPrice = parseFloat(price.replace(/,/g, "").substring(1));
+  // Combine the whole and fraction parts into a single price string
+  const priceString = wholePrice + fractionPrice;
+
+  // Convert the price string into a floating-point number
+  const formattedPrice = parseFloat(priceString.replace(/,/g, ""));
+
   const imgElement = await page.$(".a-dynamic-image");
   const img = await (await imgElement.getProperty("src")).jsonValue();
 
@@ -114,11 +126,20 @@ async function getDailyPrice() {
       })
       .lean();
     for (const item of data) {
-      const browser = await puppeteer.launch({ headless: "new" });
+      const browser = await puppeteer.launch({ headless: "false" });
       const page = await browser.newPage();
       await page.goto(item.url);
       await scrapeAmazon(page, item.url, item.domain);
       await browser.close();
+
+      // Generate a random timeout between 5 and 10 seconds (in milliseconds)
+      const timeout = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
+      console.log(
+        `Waiting for ${timeout / 1000} seconds before the next item...`
+      );
+
+      // Wait for the specified timeout before processing the next item
+      await new Promise((resolve) => setTimeout(resolve, timeout));
     }
     // console.log('Finished');
   } catch (error) {

@@ -34,7 +34,7 @@ async function start() {
   mongoose.connection.on("connected", () => {
     console.log("mongoDB connected");
   });
-  cron.schedule("10 20 * * *", () => {
+  cron.schedule("32 20 * * *", () => {
     getDailyPrice().catch((error) => {
       console.error("Unhandled promise", error);
     });
