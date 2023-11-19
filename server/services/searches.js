@@ -41,7 +41,7 @@ async function scrape(url, domain) {
   //   slowMo: 250, // Adjust the value as needed
   // });
   const page = await browser.newPage();
-  await page.setViewport({ width: 1280, height: 800 });
+  await page.setViewport({ width: 1920, height: 1080 });
 
   await page.setUserAgent(userAgent.random().toString());
 
@@ -60,12 +60,9 @@ async function scrape(url, domain) {
 async function scrapeAmazon(page, url, domain) {
   const productName = await page.evaluate(() => {
     const productTitleElement = document.querySelector("#title");
-    if (productTitleElement) {
-      return productTitleElement.textContent.trim();
-    } else {
-      return ""; // or some default value if the element is not found
-    }
+    return productTitleElement ? productTitleElement.textContent.trim() : "";
   });
+
   const wholePriceElement = await page.$(".a-price-whole");
   const fractionPriceElement = await page.$(".a-price-fraction");
 
@@ -84,19 +81,29 @@ async function scrapeAmazon(page, url, domain) {
   // Convert the price string into a floating-point number
   const formattedPrice = parseFloat(priceString.replace(/,/g, ""));
 
-  const imgElement = await page.$(".a-dynamic-image");
-  const img = await (await imgElement.getProperty("src")).jsonValue();
+  await page.waitForSelector(".a-dynamic-image");
+  await page.click(".a-dynamic-image");
+
+  // Wait for the image with class "fullscreen" to appear after the click
+  await page.waitForSelector(".fullscreen");
+
+  // Get the src attribute of the image
+  const imgSrc = await page.evaluate(() => {
+    const imgElement = document.querySelector('.fullscreen');
+    return imgElement ? imgElement.getAttribute('src') : null;
+  });
 
   const result = await createOrUpdateSearches(
     url,
     domain,
     productName,
     formattedPrice,
-    img
+    imgSrc
   );
 
   return result;
 }
+
 
 async function createOrUpdateSearches(
   url,
