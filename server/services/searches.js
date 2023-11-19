@@ -2,7 +2,7 @@ const puppeteer = require("puppeteer");
 const Price = require("../models/price");
 const Searches = require("../models/searches");
 const mapErrors = require("../utils/mappers");
-
+const userAgent = require("user-agents");
 const targetWebsites = {
   "amazon.co.uk": scrapeAmazon,
   // TODO - Add more websites and their corresponding scraping functions
@@ -36,9 +36,18 @@ async function deleteById(id) {
 
 async function scrape(url, domain) {
   const browser = await puppeteer.launch({ headless: "new" });
+  // const browser = await puppeteer.launch({
+  //   headless: false,
+  //   slowMo: 250, // Adjust the value as needed
+  // });
   const page = await browser.newPage();
+  await page.setViewport({ width: 1280, height: 800 });
+
+  await page.setUserAgent(userAgent.random().toString());
 
   await page.goto(url);
+  await page.waitForSelector("#sp-cc-accept");
+  await page.click("#sp-cc-accept");
 
   const scrapingFunction = targetWebsites[domain];
   const result = await scrapingFunction(page, url, domain); // Pass the 'page' and 'url' to the scraping function
@@ -49,7 +58,7 @@ async function scrape(url, domain) {
 
 async function scrapeAmazon(page, url, domain) {
   const productName = await page.evaluate(() => {
-    const productTitleElement = document.querySelector("#productTitle");
+    const productTitleElement = document.querySelector("#title");
     if (productTitleElement) {
       return productTitleElement.textContent.trim();
     } else {
@@ -63,7 +72,6 @@ async function scrapeAmazon(page, url, domain) {
   const wholePrice = await (
     await wholePriceElement.getProperty("textContent")
   ).jsonValue();
- 
 
   const fractionPrice = await (
     await fractionPriceElement.getProperty("textContent")
