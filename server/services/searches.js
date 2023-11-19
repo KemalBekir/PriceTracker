@@ -59,7 +59,7 @@ async function scrape(url, domain) {
 
 async function scrapeAmazon(page, url, domain) {
   const productName = await page.evaluate(() => {
-    const productTitleElement = document.querySelector("#productTitle");
+    const productTitleElement = document.querySelector("#title");
     if (productTitleElement) {
       return productTitleElement.textContent.trim();
     } else {
