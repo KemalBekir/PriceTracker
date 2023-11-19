@@ -46,8 +46,9 @@ async function scrape(url, domain) {
   await page.setUserAgent(userAgent.random().toString());
 
   await page.goto(url);
-  await page.waitForSelector("#sp-cc-accept");
-  await page.click("#sp-cc-accept");
+  // await page.screenshot({ path: path.join(__dirname, 'Screenshots', 'screenshot.png') });
+  // await page.waitForSelector("#sp-cc-accept");
+  // await page.click("#sp-cc-accept");
 
   const scrapingFunction = targetWebsites[domain];
   const result = await scrapingFunction(page, url, domain); // Pass the 'page' and 'url' to the scraping function
@@ -58,7 +59,7 @@ async function scrape(url, domain) {
 
 async function scrapeAmazon(page, url, domain) {
   const productName = await page.evaluate(() => {
-    const productTitleElement = document.querySelector("#title");
+    const productTitleElement = document.querySelector("#productTitle");
     if (productTitleElement) {
       return productTitleElement.textContent.trim();
     } else {
