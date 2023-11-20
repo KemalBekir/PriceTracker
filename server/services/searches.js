@@ -48,8 +48,8 @@ async function scrape(url, domain) {
 
   await page.goto(url);
   // await page.screenshot({ path: path.join(__dirname, 'Screenshots', 'screenshot.png') });
-  // await page.waitForSelector("#sp-cc-accept");
-  // await page.click("#sp-cc-accept");
+  await page.waitForSelector("#sp-cc-accept");
+  await page.click("#sp-cc-accept");
 
   const scrapingFunction = targetWebsites[domain];
   const result = await scrapingFunction(page, url, domain); // Pass the 'page' and 'url' to the scraping function
