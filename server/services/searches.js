@@ -89,8 +89,8 @@ async function scrapeAmazon(page, url, domain) {
 
   // Get the src attribute of the image
   const imgSrc = await page.evaluate(() => {
-    const imgElement = document.querySelector('.fullscreen');
-    return imgElement ? imgElement.getAttribute('src') : null;
+    const imgElement = document.querySelector(".fullscreen");
+    return imgElement ? imgElement.getAttribute("src") : null;
   });
 
   const result = await createOrUpdateSearches(
@@ -103,7 +103,6 @@ async function scrapeAmazon(page, url, domain) {
 
   return result;
 }
-
 
 async function createOrUpdateSearches(
   url,
@@ -134,32 +133,29 @@ async function createOrUpdateSearches(
 }
 
 async function getDailyPrice() {
+  const browser = await puppeteer.launch({ headless: true });
+  const page = await browser.newPage();
+
   try {
-    const data = await Searches.find({})
-      .populate({
-        path: "prices",
-        select: ["price", "createdAt"],
-      })
-      .lean();
+    const data = await Searches.find({}).populate({
+      path: "prices",
+      select: ["price", "createdAt"],
+    });
+
     for (const item of data) {
-      const browser = await puppeteer.launch({ headless: "false" });
-      const page = await browser.newPage();
       await page.goto(item.url);
       await scrapeAmazon(page, item.url, item.domain);
-      await browser.close();
 
-      // Generate a random timeout between 5 and 10 seconds (in milliseconds)
-      const timeout = Math.floor(Math.random() * (10000 - 5000 + 1)) + 5000;
-      console.log(
-        `Waiting for ${timeout / 1000} seconds before the next item...`
-      );
-
-      // Wait for the specified timeout before processing the next item
-      await new Promise((resolve) => setTimeout(resolve, timeout));
+      // Add a fixed delay between requests (e.g., 5 seconds)
+      await new Promise((resolve) => setTimeout(resolve, 5000));
     }
-    // console.log('Finished');
+
+    console.log("Finished scraping all items.");
   } catch (error) {
     console.error(error);
+  } finally {
+    // Close the browser after all scraping operations are done
+    await browser.close();
   }
 }
 

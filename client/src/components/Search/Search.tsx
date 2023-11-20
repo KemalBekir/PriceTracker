@@ -41,14 +41,19 @@ const Search: React.FC<SearchProps> = ({
       startLoading();
       if (matches) {
         setDomain(matches[1]);
+        setSearchTerm(url);
+        const newParams = new URLSearchParams({ name: url });
+        setSearchParams(newParams);
+      } else {
+        setSearchTerm("");
+        setSearchParams(new URLSearchParams());
+        // Display an error message using a toast or similar notification method
+        toast.error("Invalid URL entered"); // Implement showToast based on your UI library or custom function
       }
-      const newParams = new URLSearchParams({ name: url });
-      setSearchParams(newParams);
-      setSearchTerm(url);
       stopLoading();
     } else {
-      setSearchParams(new URLSearchParams());
       setSearchTerm("");
+      setSearchParams(new URLSearchParams());
       setSearching(false);
       stopLoading();
     }
