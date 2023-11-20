@@ -3,6 +3,7 @@ const Price = require("../models/price");
 const Searches = require("../models/searches");
 const mapErrors = require("../utils/mappers");
 const userAgent = require("user-agents");
+const path = require("path");
 const targetWebsites = {
   "amazon.co.uk": scrapeAmazon,
   // TODO - Add more websites and their corresponding scraping functions
@@ -47,11 +48,12 @@ async function scrape(url, domain) {
 
   await page.goto(url);
   // await page.screenshot({ path: path.join(__dirname, 'Screenshots', 'screenshot.png') });
-  // await page.waitForSelector("#sp-cc-accept");
-  // await page.click("#sp-cc-accept");
+  await page.waitForSelector("#sp-cc-accept");
+  await page.click("#sp-cc-accept");
 
   const scrapingFunction = targetWebsites[domain];
   const result = await scrapingFunction(page, url, domain); // Pass the 'page' and 'url' to the scraping function
+
   await browser.close();
 
   return result;
@@ -81,17 +83,25 @@ async function scrapeAmazon(page, url, domain) {
   // Convert the price string into a floating-point number
   const formattedPrice = parseFloat(priceString.replace(/,/g, ""));
 
-  await page.waitForSelector(".a-dynamic-image");
-  await page.click(".a-dynamic-image");
+  await page.waitForSelector(".a-carousel-card");
+  await page.click(".a-carousel-card");
 
   // Wait for the image with class "fullscreen" to appear after the click
-  await page.waitForSelector(".fullscreen");
+  await page.waitForSelector(".a-image-wrapper");
 
   // Get the src attribute of the image
-  const imgSrc = await page.evaluate(() => {
-    const imgElement = document.querySelector(".fullscreen");
-    return imgElement ? imgElement.getAttribute("src") : null;
-  });
+  // await page.screenshot({
+  //   path: path.join(__dirname, "Screenshots", `${domain}.png`),
+  // });
+  // const imgSrc = await page.evaluate(() => {
+  //   const imgElement = document.querySelector(".a-image-wrapper");
+  //   return imgElement ? imgElement.getAttribute("src") : null;
+  // });
+
+  const imgElement = await page.$(".a-immersive-image-wrapper");
+  const imgSrc = await imgElement.$eval("img", (img) =>
+    img.getAttribute("src")
+  );
 
   const result = await createOrUpdateSearches(
     url,
@@ -112,13 +122,17 @@ async function createOrUpdateSearches(
   img
 ) {
   let result = await Searches.findOne({ url });
+
   if (!result) {
     result = new Searches({
       url,
       domain,
       itemName: productName,
-      img,
+      img: img || null, // Set img to null if it's not provided initially
     });
+  } else if (!result.img && img) {
+    // Update the img field only if it's null in the database and the new img is not null
+    result.img = img;
   }
 
   const newPrice = new Price({
@@ -131,6 +145,7 @@ async function createOrUpdateSearches(
 
   return result;
 }
+
 
 async function getDailyPrice() {
   const browser = await puppeteer.launch({ headless: true });
