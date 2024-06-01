@@ -1,6 +1,7 @@
-# Price Tracker
+# Price Tracker - Updated
 
 Price Tracker is a simple web application that allows users to track the prices of items listed on Amazon. With Price Tracker, users can post links to Amazon products, and the application will scrape the current price of the item and track its price daily. The application also provides a detailed page for each item, displaying a price graph for easy visualization of price fluctuations.
+The live version is using different backend written in Golang. You can find in my github [here](https://github.com/KemalBekir/price-tracker-rest-api-go).
 
 ## Technologies Used
 
