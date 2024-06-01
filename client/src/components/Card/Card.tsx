@@ -23,7 +23,7 @@ const Card: React.FC<DataProps> = ({ data }) => {
       <div className="mt-4 flex justify-between">
         <div>
           <h3 className="text-sm text-gray-700">
-            <Link to={`/catalog/${data?._id}`}>
+            <Link to={`/catalog/${data?.id}`}>
               <span aria-hidden="true" className="absolute inset-0"></span>
               {data?.itemName.length > 25
                 ? data?.itemName.substring(0, 30)

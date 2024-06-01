@@ -5,7 +5,7 @@ export interface Price {
 }
 
 export interface ItemProps {
-  _id: string;
+  id: string;
   url: string;
   itemName: string;
   prices: Price[];

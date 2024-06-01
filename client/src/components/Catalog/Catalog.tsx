@@ -57,7 +57,7 @@ const Catalog: React.FC<Props> = (props: Props) => {
 
       <div className="mx-3 mt-2 grid min-h-full cursor-pointer lg:grid-cols-3 gap-4 sm:grid-cols-1 md:grid-cols-2">
         {currentItems.map((item) => (
-          <div className="w-full" key={item._id}>
+          <div className="w-full" key={item.id}>
             <CatalogCard data={item} />
           </div>
         ))}

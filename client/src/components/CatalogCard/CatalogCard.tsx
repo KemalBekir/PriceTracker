@@ -21,7 +21,7 @@ const CatalogCard: React.FC<DataProps> = ({ data }) => {
   //   </div>;
 
   return (
-    <Link to={`/catalog/${data?._id}`}>
+    <Link to={`/catalog/${data?.id}`}>
       <div className="group relative drop-shadow-md">
         <div className="absolute inset-0 rounded-lg bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-80"></div>
         <div className="aspect-h-1 aspect-w-1 lg:aspect-none w-full overflow-hidden rounded-md bg-gray-200 drop-shadow-md group-hover:opacity-75 lg:h-80">
@@ -37,7 +37,7 @@ const CatalogCard: React.FC<DataProps> = ({ data }) => {
           <span className="font-bold">£{data?.prices[index].price}</span>
         </div>
         <div className="absolute bottom-3 right-5 rounded-full bg-white px-6 py-2 text-sm text-black opacity-0 transition duration-500 hover:bg-black hover:text-white group-hover:opacity-100">
-          <Link to={`/catalog/${data?._id}`} className="font-bold">
+          <Link to={`/catalog/${data?.id}`} className="font-bold">
             details
           </Link>
         </div>

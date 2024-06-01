@@ -42,14 +42,15 @@ async function scrape(url, domain) {
   //   slowMo: 250, // Adjust the value as needed
   // });
   const page = await browser.newPage();
-  await page.setViewport({ width: 1920, height: 1080 });
+  // await page.setViewport({ width: 1920, height: 1080 });
 
-  await page.setUserAgent(userAgent.random().toString());
+  const agent = new userAgent({deviceCategory: 'desktop'})
+  await page.setUserAgent(agent.random().toString());
 
   await page.goto(url);
   // await page.screenshot({ path: path.join(__dirname, 'Screenshots', 'screenshot.png') });
-  await page.waitForSelector("#sp-cc-accept");
-  await page.click("#sp-cc-accept");
+  // await page.waitForSelector("#sp-cc-accept");
+  // await page.click("#sp-cc-accept");
 
   const scrapingFunction = targetWebsites[domain];
   const result = await scrapingFunction(page, url, domain); // Pass the 'page' and 'url' to the scraping function
@@ -83,25 +84,28 @@ async function scrapeAmazon(page, url, domain) {
   // Convert the price string into a floating-point number
   const formattedPrice = parseFloat(priceString.replace(/,/g, ""));
 
-  await page.waitForSelector(".a-carousel-card");
-  await page.click(".a-carousel-card");
+  // await page.waitForSelector(".a-dynamic-image");
+  // await page.click(".a-dynamic-image");
 
-  // Wait for the image with class "fullscreen" to appear after the click
-  await page.waitForSelector(".a-image-wrapper");
+  // // Wait for the image with class "fullscreen" to appear after the click
+  // await page.waitForSelector(".fullscreen");
 
   // Get the src attribute of the image
   // await page.screenshot({
   //   path: path.join(__dirname, "Screenshots", `${domain}.png`),
   // });
   // const imgSrc = await page.evaluate(() => {
-  //   const imgElement = document.querySelector(".a-image-wrapper");
+  //   const imgElement = document.querySelector(".fullscreen");
   //   return imgElement ? imgElement.getAttribute("src") : null;
   // });
 
-  const imgElement = await page.$(".a-immersive-image-wrapper");
-  const imgSrc = await imgElement.$eval("img", (img) =>
-    img.getAttribute("src")
-  );
+  // const imgElement = await page.$(".a-immersive-image-wrapper");
+  // const imgSrc = await imgElement.$eval("img", (img) =>
+  //   img.getAttribute("src")
+  // );
+
+  const imgElement = await page.$(".a-dynamic-image");
+  const imgSrc = await (await imgElement.getProperty("src")).jsonValue();
 
   const result = await createOrUpdateSearches(
     url,
@@ -146,9 +150,8 @@ async function createOrUpdateSearches(
   return result;
 }
 
-
 async function getDailyPrice() {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
 
   try {

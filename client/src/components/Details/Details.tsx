@@ -11,8 +11,9 @@ const Details = () => {
   const [data, setData] = useState<ItemProps | null>(null);
   const { itemId } = useParams<string>();
   const index = data?.prices ? data.prices.length - 1 : 0;
-
+  
   useEffect(() => {
+    
     if (itemId) {
       startLoading();
       CatalogService.getById(itemId)
@@ -59,7 +60,7 @@ const Details = () => {
                   href={data?.url}
                   className="ml-auto flex rounded border-0 bg-red-500 px-6 py-2 text-white hover:bg-red-600 focus:outline-none"
                 >
-                  Amazon Link
+                  Ebuyer Link
                 </a>
                 {/* <button className="ml-4 inline-flex h-10 w-10 items-center justify-center rounded-full border-0 bg-gray-200 p-0 text-gray-500">
                   <svg

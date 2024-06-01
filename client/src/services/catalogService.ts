@@ -1,4 +1,4 @@
-const catalogUrl = `https://pricetracker-api.onrender.com/catalog`;
+const catalogUrl = `https://pricetracker-api.onrender.com/`;
 
 export async function getAll() {
   return fetch(`${catalogUrl}/`, {
