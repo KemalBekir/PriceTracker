@@ -1,6 +1,6 @@
 # Price Tracker - Updated
 
-Price Tracker is a simple web application that allows users to track the prices of items listed on Amazon. With Price Tracker, users can post links to Amazon products, and the application will scrape the current price of the item and track its price daily. The application also provides a detailed page for each item, displaying a price graph for easy visualization of price fluctuations.
+Price Tracker is a simple web application that allows users to track the prices of items listed on Ebuyer. With Price Tracker, users can post links to Ebuyer products, and the application will scrape the current price of the item and track its price daily. The application also provides a detailed page for each item, displaying a price graph for easy visualization of price fluctuations.
 The live version is using different backend written in Golang. You can find in my github [here](https://github.com/KemalBekir/price-tracker-rest-api-go).
 
 ## Technologies Used
@@ -16,13 +16,13 @@ The live version is using different backend written in Golang. You can find in m
 
 ## Key Features
 
-- User-friendly interface for adding and tracking Amazon product prices.
+- User-friendly interface for adding and tracking Ebuyer product prices.
 - Daily price scraping to keep track of price fluctuations.
 - Detailed item pages with price graphs for visualizing price history.
 - Integration with MongoDB for data storage and retrieval.
 - Built with React for the front-end and Node.js/Express.js for the back-end.
 - UI styling using Tailwind CSS for a clean and responsive design.
-- Price scraping using Puppeteer to fetch data from Amazon's website.
+- Price scraping using Puppeteer to fetch data from Ebuyer's website.
 - Data visualization using Recharts to display price graphs.
 
 ## Installation
@@ -57,7 +57,7 @@ This will start the React development server.
 ## Usage
 
 1. Open the application in your browser.
-2. Add an Amazon product link to start tracking its price.
+2. Add an Ebuyer product link to start tracking its price.
 3. View the item's details page to see the price history graph and track price changes over time.
 
 <div align="center">
